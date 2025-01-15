@@ -1,0 +1,32 @@
+<h2>Lista jugadores</h2>
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Email</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Edad</th>
+            <th>Nivel</th>
+            <th>Rating</th>
+            <th>Nacionalidad</th>
+            <th>FecRegistro</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor= "let jugador of jugadores">
+            <td>{{jugador.email}}</td>
+            <td>{{jugador.nombre}}</td>
+            <td>{{jugador.apellido}}</td>
+            <td>{{jugador.edad}}</td>
+            <td>{{jugador.nivel}}</td>
+            <td>{{jugador.rating}}</td>
+            <td>{{jugador.nacionalidad}}</td>
+            <td>{{jugador.fecRegistro}}</td>
+            <td style="display: flex; gap: 10px;">
+                <button (click)= "actualizarJugador(jugador.id)" class="btn btn-info">Editar</button>
+                <button (click)= "eliminarJugador(jugador.id)" class="btn btn-danger" style="margin-left : 10px;">Eliminar</button>
+                <button (click)= "verDetalleJugador(jugador.id)" class="btn btn-primary" style="margin-left : 10px;">Detalles</button>
+              </td>
+        </tr>
+    </tbody>
+</table>
