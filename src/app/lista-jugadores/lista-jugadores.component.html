@@ -22,12 +22,10 @@
 </div>
 
 <!-- Placeholder mientras se cargan los jugadores -->
-<div *ngIf="loading" class="placeholder-container text-center">
-  <p>Cargando jugadores...</p>
-  <div class="skeleton"></div>
-  <div class="skeleton"></div>
-  <div class="skeleton"></div>
-</div>
+<div *ngIf="loading" class="loading-container">
+  <div class="hourglass"></div>
+  <p class="loading-text">Cargando jugadores...</p>
+</div><br>
 
 <!-- Tabla de jugadores -->
 <div *ngIf="!loading" class="table-responsive">

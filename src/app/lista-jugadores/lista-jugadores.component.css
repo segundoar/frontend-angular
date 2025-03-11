@@ -1,0 +1,57 @@
+/* Contenedor del reloj de arena */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px; /* Más espacio para centrar */
+  margin: 20px 0;
+}
+
+/* Reloj de arena más grande */
+.hourglass {
+  width: 60px;  /* Aumenta el tamaño */
+  height: 60px; /* Aumenta el tamaño */
+  border: 5px solid #007bff;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 1.5s infinite linear;
+}
+
+/* Bolas del reloj más grandes */
+.hourglass::before, 
+.hourglass::after {
+  content: "";
+  position: absolute;
+  width: 24px;  /* Aumenta el tamaño */
+  height: 24px; /* Aumenta el tamaño */
+  background-color: #007bff;
+  border-radius: 50%;
+}
+
+.hourglass::before {
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hourglass::after {
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Animación de rotación */
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Texto de carga más grande */
+.loading-text {
+  margin-top: 15px;
+  font-size: 18px; /* Aumenta el tamaño */
+  font-weight: bold;
+  color: #007bff;
+}
