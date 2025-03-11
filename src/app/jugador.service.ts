@@ -15,23 +15,23 @@ export class JugadorService {
   constructor(private httpClient : HttpClient) { }
 
   obtenerListaJugadores(): Observable<Pagina> {
-    return this.httpClient.get<Pagina>(this.baseURL_pro + '/jugadores');
+    return this.httpClient.get<Pagina>(this.baseURL + '/jugadores');
   }
   
   registrarJugador(jugador: Jugador): Observable<Object> {
-    return this.httpClient.post(`${this.baseURL_pro}`, jugador);
+    return this.httpClient.post(`${this.baseURL}`, jugador);
   }
 
   actualizarJugador(id: number, jugador: Jugador): Observable<Object> {
-    return this.httpClient.patch(`${this.baseURL_pro+ '/jugador'}/${id}`, jugador);
+    return this.httpClient.patch(`${this.baseURL+ '/jugador'}/${id}`, jugador);
   }
 
   obtenerJugadorPorId(id: number): Observable<Jugador> {
-    return this.httpClient.get<Jugador>(`${this.baseURL_pro + '/jugador'}/${id}`);
+    return this.httpClient.get<Jugador>(`${this.baseURL + '/jugador'}/${id}`);
   }
 
   eliminarJugador(id: number): Observable<Object> {
-    return this.httpClient.delete(`${this.baseURL_pro}/${id}`);
+    return this.httpClient.delete(`${this.baseURL}/${id}`);
   }
 
 }

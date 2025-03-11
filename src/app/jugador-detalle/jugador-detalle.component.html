@@ -1,1 +1,17 @@
-<p>jugador-detalle works!</p>
+<div class="col-md-6 offset-md">
+    <h3>Lista de Partidas del Jugador</h3>
+    
+    <div *ngIf="partidas.length > 0; else noPartidas">
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let partida of partidas">
+                <strong>Fecha Juego:</strong> {{ partida.fecJuego }}<br>
+                <strong>Resultado:</strong> {{ partida.resultado }}<br>
+                <strong>Jugada:</strong> {{ partida.jugadaPartida }}
+            </li>
+        </ul>
+    </div>
+    
+    <ng-template #noPartidas>
+        <p>No hay partidas registradas para este jugador.</p>
+    </ng-template>
+</div>

@@ -18,7 +18,7 @@
     <div class="form-group">
       <label>Nombre : </label>
       <input type="text" class="form-control" id="nombre" [(ngModel)]="jugador.nombre" name="nombre" required
-        minlength="4" maxlength="10" placeholder="Digite su nombre " #nombre="ngModel" />
+        minlength="2" maxlength="100" placeholder="Digite su nombre " #nombre="ngModel" />
       <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
         <div *ngIf="nombre.errors?.['required']">
           Digite su nombre por favor
@@ -33,9 +33,9 @@
     </div>
 
     <div class="form-group">
-      <label>Apellido : </label>
+      <label>Apellidos : </label>
       <input type="text" class="form-control" id="apellido" [(ngModel)]="jugador.apellido" name="apellido" required
-        minlength="4" maxlength="10" placeholder="Digite su apellido " #apellido="ngModel" />
+        minlength="2" maxlength="150" placeholder="Digite su apellido " #apellido="ngModel" />
       <div class="alert alert-danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
         <div *ngIf="apellido.errors?.['required']">
           Digite su apellido por favor
@@ -51,7 +51,7 @@
     <div class="form-group">
       <label>Edad : </label>
       <input type="number" class="form-control" id="edad" [(ngModel)]="jugador.edad" name="edad" required min="1"
-        max="100" placeholder="Digite su edad " #edad="ngModel" />
+        max="200" placeholder="Digite su edad " #edad="ngModel" />
       <div class="alert alert-danger" *ngIf="edad.invalid && (edad.dirty || edad.touched)">
         <div *ngIf="edad.errors?.['required']">Digite su edad por favor</div>
         <div *ngIf="edad.errors?.['min']">La edad debe ser al menos 1 año</div>
@@ -60,11 +60,18 @@
     </div>
 
     <div class="form-group">
-      <label>Nivel : </label>
-      <input type="text" class="form-control" id="nivel" [(ngModel)]="jugador.nivel" name="nivel" required
-        placeholder="Digite su nivel (e.g., Principiante)" #nivel="ngModel" />
-      <div class="alert alert-danger" *ngIf="nivel.invalid && (nivel.dirty || nivel.touched)">
-        <div *ngIf="nivel.errors?.['required']">Digite su nivel por favor</div>
+      <label for="nivel">Nivel:</label>
+      <select id="nivel" class="form-control" [(ngModel)]="jugador.nivel" name="nivel" required>
+        <option value="" disabled selected>Seleccione el nivel</option>
+        <option value="Principiante">Principiante [0-1000]</option>
+        <option value="Jug. Aficionado">Aficionado [1000-1400]</option>
+        <option value="Jug. de Club">Jug. de Club [1400-1800]</option>
+        <option value="Experto">Experto [1800-2000]</option>
+      </select>
+      <div class="alert alert-danger" *ngIf="jugadorForm.submitted && !jugador.nivel">
+        <div *ngIf="!jugador.nivel">
+          Por favor, seleccione un nivel.
+        </div>
       </div>
     </div>
 
@@ -104,17 +111,38 @@
       <div *ngFor="let partida of jugador.partidas; let i = index" class="mb-3">
         <!-- Al pulsar el +, la etiqueta y el ícono aparecerán por encima -->
         <h5 style="text-align: left;">Partida {{ i + 1 }}</h5>
-    
+
         <div class="form-group">
-          <label >Resultado : </label>
-          <input type="text" class="form-control" [(ngModel)]="partida.resultado" name="partidaResultado{{ i }}"
-            placeholder="Digite el resultado (e.g., Victoria)" required />
+          <label for="nivel">Resultado:</label>
+          <select id="nivel" class="form-control" [(ngModel)]="partida.resultado" name="partidaResultado{{ i }}" required>
+            <option value="" disabled selected>Seleccione el resultado</option>
+            <option value="Victoria">Victoria</option>
+            <option value="Derrota">Derrota</option>
+            <option value="Tablas">Tablas</option>
+          </select>
+          <div class="alert alert-danger" *ngIf="jugadorForm.submitted && !partida.resultado">
+            <div *ngIf="!partida.resultado">
+              Por favor, seleccione un resultado.
+            </div>
+          </div>
         </div>
-    
+
         <div class="form-group">
-          <label>Jugada : </label>
-          <input type="text" class="form-control" [(ngModel)]="partida.jugadaPartida" name="partidaJugada{{ i }}"
-            placeholder="Digite la jugada (e.g., Jaque Mate)" required />
+          <label for="nivel">Jugada:</label>
+          <select id="nivel" class="form-control" [(ngModel)]="partida.jugadaPartida" name="partidaJugada{{ i }}" required>
+            <option value="" disabled selected>Seleccione una jugada</option>
+            <option value="Jaque Mate">Jaque Mate</option>
+            <option value="Tiempo Agotado">Tiempo Agotado</option>
+            <option value="Acuerdo Mutuo (T)">Acuerdo Mutuo (T)</option>
+            <option value="Ahogado (T)">Ahogado (T)</option>
+            <option value="Falta Material (T)">Falta Material (T)</option>
+            <option value="Abandono">Abandono</option>
+          </select>
+          <div class="alert alert-danger" *ngIf="jugadorForm.submitted && !partida.jugadaPartida">
+            <div *ngIf="!partida.jugadaPartida">
+              Por favor, seleccione una juagda.
+            </div>
+          </div>
         </div>
     
         <!-- Botón para eliminar partida -->

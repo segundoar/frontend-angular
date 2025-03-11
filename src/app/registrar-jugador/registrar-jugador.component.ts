@@ -30,6 +30,7 @@ export class RegistrarJugadorComponent {
   agregarPartida() {
     // Crear una nueva partida con valores predeterminados
     const nuevaPartida = {
+      fecJuego: '',
       resultado: '',
       jugadaPartida: ''
     };

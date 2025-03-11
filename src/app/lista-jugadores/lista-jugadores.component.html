@@ -1,32 +1,91 @@
-<h2>Lista jugadores</h2>
-<table class="table table-striped">
+<!-- Contenedor flexible para alinear texto e imagen -->
+<div class="d-flex align-items-center justify-content-center mb-4">
+  <!-- Texto -->
+  <p class="lead text-muted mb-0 me-3">"Una plataforma para administrar jugadores de ajedrez"</p>
+  
+  <!-- Imagen pieza ajedrez -->
+  <img src="assets/pieza-ajedrez.jpg" class="img-fluid" style="max-width: 130px; pointer-events: none;">
+</div>
+
+<!-- Barra de búsqueda con ícono de lupa -->
+<div class="input-group mb-4" style="max-width: 400px; margin: 0 auto;">
+  <input 
+    type="text" 
+    class="form-control" 
+    placeholder="Buscar jugador..." 
+    [(ngModel)]="searchText" 
+    (input)="filtrarJugadores()" 
+    style="border-radius: 25px; border: 1px solid #ced4da;">
+  <span class="input-group-text" id="basic-addon2" style="border-radius: 25px; background-color: #f0f0f0;">
+    <i class="bi bi-search" style="color: #007bff;"></i>
+  </span>
+</div>
+
+<!-- Placeholder mientras se cargan los jugadores -->
+<div *ngIf="loading" class="placeholder-container text-center">
+  <p>Cargando jugadores...</p>
+  <div class="skeleton"></div>
+  <div class="skeleton"></div>
+  <div class="skeleton"></div>
+</div>
+
+<!-- Tabla de jugadores -->
+<div *ngIf="!loading" class="table-responsive">
+  <table class="table table-bordered table-hover shadow-sm">
     <thead class="table-dark">
-        <tr>
-            <th>Email</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Edad</th>
-            <th>Nivel</th>
-            <th>Rating</th>
-            <th>Nacionalidad</th>
-            <th>FecRegistro</th>
-        </tr>
-    </thead>
+      <tr>
+        <th (click)="ordenarPorColumna('email')" style="cursor: pointer;">Email</th>
+        <th (click)="ordenarPorColumna('nombre')" style="cursor: pointer;">Nombre</th>
+        <th (click)="ordenarPorColumna('apellido')" style="cursor: pointer;">Apellidos</th>
+        <th (click)="ordenarPorColumna('edad')" style="cursor: pointer;">Edad</th>
+        <th (click)="ordenarPorColumna('nivel')" style="cursor: pointer;">Nivel</th>
+        <th (click)="ordenarPorColumna('rating')" style="cursor: pointer;">Rating</th>
+        <th (click)="ordenarPorColumna('nacionalidad')" style="cursor: pointer;">Nacionalidad</th>
+        <th (click)="ordenarPorColumna('fecRegistro')" style="cursor: pointer;">FecRegistro</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>  
     <tbody>
-        <tr *ngFor= "let jugador of jugadores">
-            <td>{{jugador.email}}</td>
-            <td>{{jugador.nombre}}</td>
-            <td>{{jugador.apellido}}</td>
-            <td>{{jugador.edad}}</td>
-            <td>{{jugador.nivel}}</td>
-            <td>{{jugador.rating}}</td>
-            <td>{{jugador.nacionalidad}}</td>
-            <td>{{jugador.fecRegistro}}</td>
-            <td style="display: flex; gap: 10px;">
-                <button (click)= "actualizarJugador(jugador.id)" class="btn btn-info">Editar</button>
-                <button (click)= "eliminarJugador(jugador.id)" class="btn btn-danger" style="margin-left : 10px;">Eliminar</button>
-                <button (click)= "verDetalleJugador(jugador.id)" class="btn btn-primary" style="margin-left : 10px;">Detalles</button>
-              </td>
-        </tr>
+      <tr *ngFor="let jugador of jugadoresFiltrados | slice:paginaActual:paginaActual+jugadoresPorPagina">
+        <td>{{jugador.email}}</td>
+        <td>{{jugador.nombre}}</td>
+        <td>{{jugador.apellido}}</td>
+        <td>{{jugador.edad}}</td>
+        <td>{{jugador.nivel}}</td>
+        <td>{{jugador.rating}}</td>
+        <td>{{jugador.nacionalidad}}</td>
+        <td>{{jugador.fecRegistro}}</td>
+        <td class="text-center">
+          <button (click)="actualizarJugador(jugador.id)" class="btn btn-info btn-sm">
+            <i class="bi bi-pencil"></i> 
+          </button>
+          <button (click)="eliminarJugador(jugador.id)" class="btn btn-danger btn-sm mx-2">
+            <i class="bi bi-trash"></i> 
+          </button>
+          <button (click)="verDetalleJugador(jugador.id)" class="btn btn-primary btn-sm">
+            <i class="bi bi-info-circle"></i> 
+          </button>
+        </td>
+      </tr>
     </tbody>
-</table>
+  </table>
+</div>
+
+<!-- Controles de paginación y selector de cantidad -->
+<div class="d-flex">
+  <div class="btn-group" role="group">
+    <button (click)="cambiarNumeroJugadores(10)" class="btn btn-outline-secondary btn-sm">10</button>
+    <button (click)="cambiarNumeroJugadores(20)" class="btn btn-outline-secondary btn-sm">20</button>
+    <button (click)="cambiarNumeroJugadores(50)" class="btn btn-outline-secondary btn-sm">50</button>
+    <button (click)="cambiarNumeroJugadores(jugadores.length)" class="btn btn-outline-secondary btn-sm">Todos</button>
+  </div>
+  
+  <div class="d-flex" style="margin-left: 70px;">
+    <button (click)="cambiarPagina(-1)" class="btn btn-outline-primary btn-sm me-1" [disabled]="paginaActual === 0">
+      <i class="bi bi-chevron-left"></i> Anterior
+    </button>
+    <button (click)="cambiarPagina(1)" class="btn btn-outline-primary btn-sm" [disabled]="paginaActual + jugadoresPorPagina >= jugadoresFiltrados.length">
+      Siguiente <i class="bi bi-chevron-right"></i>
+    </button>
+  </div>
+</div>
